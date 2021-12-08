@@ -9,8 +9,9 @@ import (
 )
 
 func main() {
-	var total, previous int
-	total = 0
+	var total, previous, x, y int
+	queue := []int{}
+	total, x = 0, 0
 	previous = 0
 	file, err := os.Open("Inputs.txt")
 	if err != nil {
@@ -19,16 +20,22 @@ func main() {
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		current, err := strconv.Atoi(scanner.Text())
+		push, err := strconv.Atoi(scanner.Text())
+		queue = append(queue, push)
+		x += push
+		if len(queue) == 3 {
+			if x > previous {
+				total += 1
+			}
+			previous = x
+			y, queue = queue[0], queue[1:]
+			x -= y
+		}
 		if err != nil {
 			// handle error
 			fmt.Println(err)
 			os.Exit(2)
 		}
-		if current > previous {
-			total += 1
-		}
-		previous = current
 	}
 	fmt.Println(total)
 	if err := scanner.Err(); err != nil {
