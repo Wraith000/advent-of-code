@@ -13,7 +13,7 @@ func main() {
 	queue := []int{}
 	total, x = 0, 0
 	previous = 0
-	file, err := os.Open("Inputs.txt")
+	file, err := os.Open("Day1.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
